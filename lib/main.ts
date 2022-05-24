@@ -42,7 +42,7 @@ const datastore = new AuroraServerlessTemporalDatastore(stack, 'Datastore', {
 //     containerInsights: true,
 // });
 
-const ecsCluster = aws_ecs.Cluster.fromClusterAttributes(app, "amalada275-produa70a0", {
+const ecsCluster = aws_ecs.Cluster.fromClusterAttributes(stack, "amalada275-produa70a0", {
     clusterName: "amalada275-produa70a0",
     vpc: vpc,
     securityGroups: []
