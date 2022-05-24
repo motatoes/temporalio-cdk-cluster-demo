@@ -24,6 +24,8 @@ const stack = new Stack(app, 'MyTemporalClusterStack', {
 
 // const vpc = aws_ec2.Vpc.fromVpcAttributes(stack, "vpc-07f674e20fb1fbca6", {})
 const vpc = aws_ec2.Vpc.fromLookup(stack, "vpc-07f674e20fb1fbca6", {vpcId: "vpc-07f674e20fb1fbca6"})
+console.log(vpc.publicSubnets)
+console.log(vpc.isolatedSubnets)
 console.log(vpc.privateSubnets)
 // const sg1 = aws_ec2.Subnet.fromSubnetId(stack, "subnet-0f4a584ee207fa930", "subnet-0f4a584ee207fa930")
 // const sg2 = aws_ec2.Subnet.fromSubnetId(stack, "subnet-0df4a6a90d4330946", "subnet-0df4a6a90d4330946")
