@@ -4,6 +4,9 @@ import { Vpc } from 'aws-cdk-lib/aws-ec2';
 import { PrivateDnsNamespace } from 'aws-cdk-lib/aws-servicediscovery';
 import { AuroraMysqlEngineVersion, DatabaseClusterEngine } from 'aws-cdk-lib/aws-rds';
 import { Cluster } from 'aws-cdk-lib/aws-ecs';
+import { aws_ec2 } from 'aws-cdk-lib';
+import { aws_ecs } from 'aws-cdk-lib';
+import { Construct } from 'constructs';
 
 const app = new App();
 
@@ -14,10 +17,12 @@ const stack = new Stack(app, 'MyTemporalClusterStack', {
     },
 });
 
-const vpc = new Vpc(stack, 'Vpc', {
-    maxAzs: 2,
-    natGateways: 1,
-});
+// const vpc = new Vpc(stack, 'Vpc', {
+//     maxAzs: 2,
+//     natGateways: 1,
+// });
+
+const vpc = aws_ec2.Vpc.fromVpcAttributes(app, "vpc-07f674e20fb1fbca6", {})
 
 const cloudMapNamespace = new PrivateDnsNamespace(stack, 'CloudMapNamespace', {
     name: 'privatesvc',
@@ -30,11 +35,13 @@ const datastore = new AuroraServerlessTemporalDatastore(stack, 'Datastore', {
     removalPolicy: RemovalPolicy.DESTROY,
 });
 
-const ecsCluster = new Cluster(stack, 'EcsCluster', {
-    vpc: vpc,
-    enableFargateCapacityProviders: true,
-    containerInsights: true,
-});
+// const ecsCluster = new Cluster(stack, 'EcsCluster', {
+//     vpc: vpc,
+//     enableFargateCapacityProviders: true,
+//     containerInsights: true,
+// });
+
+const ecsCluster = aws_ecs.Cluster.fromClusterAttributes(app, "amalada275-produa70a0", {})
 
 new TemporalCluster(stack, 'TemporalCluster', {
     vpc,
