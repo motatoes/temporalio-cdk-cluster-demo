@@ -22,7 +22,8 @@ const stack = new Stack(app, 'MyTemporalClusterStack', {
 //     natGateways: 1,
 // });
 
-const vpc = aws_ec2.Vpc.fromVpcAttributes(app, "vpc-07f674e20fb1fbca6", {})
+// const vpc = aws_ec2.Vpc.fromVpcAttributes(stack, "vpc-07f674e20fb1fbca6", {})
+const vpc = aws_ec2.Vpc.fromLookup(stack, "vpc-07f674e20fb1fbca6", {vpcId: "vpc-07f674e20fb1fbca6"})
 
 const cloudMapNamespace = new PrivateDnsNamespace(stack, 'CloudMapNamespace', {
     name: 'privatesvc',
@@ -41,7 +42,11 @@ const datastore = new AuroraServerlessTemporalDatastore(stack, 'Datastore', {
 //     containerInsights: true,
 // });
 
-const ecsCluster = aws_ecs.Cluster.fromClusterAttributes(app, "amalada275-produa70a0", {})
+const ecsCluster = aws_ecs.Cluster.fromClusterAttributes(app, "amalada275-produa70a0", {
+    clusterName: "amalada275-produa70a0",
+    vpc: vpc,
+    securityGroups: []
+})
 
 new TemporalCluster(stack, 'TemporalCluster', {
     vpc,
