@@ -15,6 +15,7 @@ const stack = new Stack(app, 'MyTemporalClusterStack', {
 });
 
 const vpc = new Vpc(stack, 'Vpc', {
+    cidr: "11.0.0.0/16",
     maxAzs: 2,
     natGateways: 1,
 });
